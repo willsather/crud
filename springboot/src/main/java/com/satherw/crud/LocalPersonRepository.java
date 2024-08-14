@@ -27,23 +27,17 @@ public class LocalPersonRepository implements PersonRepository {
         return personToSave;
     }
 
-    public Iterable<Person> findPersons() {
-        return this.persons;
-    }
-
-    public Optional<Person> findPersonById(Long id) {
+    public Optional<Person> findPerson(Long id) {
         return this.persons.stream()
                 .filter(person -> person.getId().equals(id))
                 .findFirst();
     }
 
-    public void deleteById(Long id) {
-        Optional<Person> personToDelete = this.findPersonById(id);
+    public Iterable<Person> findPersons() {
+        return this.persons;
+    }
 
-        if (personToDelete.isEmpty()) {
-            return;
-        }
-
-        this.persons.remove(personToDelete.get());
+    public void deletePerson(Person person) {
+        this.persons.remove(person);
     }
 }
