@@ -1,12 +1,9 @@
 package com.satherw.crud;
 
-import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public class LocalPersonRepository implements PersonRepository {
     private Long currentId = 1L;
     private final List<Person> persons;
@@ -33,7 +30,7 @@ public class LocalPersonRepository implements PersonRepository {
                 .findFirst();
     }
 
-    public Iterable<Person> findPersons() {
+    public List<Person> findPersons() {
         return this.persons;
     }
 

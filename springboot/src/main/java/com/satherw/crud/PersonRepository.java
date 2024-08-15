@@ -1,5 +1,6 @@
 package com.satherw.crud;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PersonRepository {
@@ -7,7 +8,7 @@ public interface PersonRepository {
 
     Optional<Person> findPerson(Long id);
 
-    Iterable<Person> findPersons();
+    List<Person> findPersons();
 
     void deletePerson(Person person);
 }

@@ -1,20 +1,23 @@
 package com.satherw.crud;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class CrudController {
 
-    @Autowired
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
+
+    public CrudController(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     @GetMapping("/persons")
-    public Iterable<Person> getPersons() {
+    public List<Person> getPersons() {
         return this.personRepository.findPersons();
     }
 
@@ -22,11 +25,8 @@ public class CrudController {
     ResponseEntity<Person> getPerson(@PathVariable Long id) {
         Optional<Person> person = this.personRepository.findPerson(id);
 
-        if (person.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(person.get(), HttpStatus.OK);
+        return person.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/persons")
