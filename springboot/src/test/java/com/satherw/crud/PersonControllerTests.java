@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers
 @Transactional
 @AutoConfigureMockMvc
-class CrudControllerTests {
+class PersonControllerTests {
 
 	@Container
 	@ServiceConnection
