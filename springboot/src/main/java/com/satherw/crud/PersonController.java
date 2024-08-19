@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class CrudController {
+public class PersonController {
 
     private final PersonService personService;
 
     private final PersonRepository personRepository;
 
-    public CrudController(PersonService personService, PersonRepository personRepository) {
+    public PersonController(PersonService personService, PersonRepository personRepository) {
         this.personService = personService;
         this.personRepository = personRepository;
     }
