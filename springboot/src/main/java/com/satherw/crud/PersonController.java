@@ -12,11 +12,8 @@ public class PersonController {
 
     private final PersonService personService;
 
-    private final PersonRepository personRepository;
-
-    public PersonController(PersonService personService, PersonRepository personRepository) {
+    public PersonController(PersonService personService) {
         this.personService = personService;
-        this.personRepository = personRepository;
     }
 
     @GetMapping("/persons")
@@ -26,7 +23,7 @@ public class PersonController {
 
     @GetMapping("/persons/{id}")
     ResponseEntity<Person> getPerson(@PathVariable Long id) {
-        Optional<Person> person = this.personRepository.findPerson(id);
+        Optional<Person> person = personService.getPerson(id);
 
         return person.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -34,20 +31,20 @@ public class PersonController {
 
     @PostMapping("/persons")
     public ResponseEntity<Person> createPerson(@RequestBody Person person) {
-        Person savedPerson = personRepository.savePerson(person);
+        Person createdPerson = personService.createPerson(person);
 
-        return new ResponseEntity<>(savedPerson, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdPerson, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/persons/{id}")
     ResponseEntity<Person> deletePerson(@PathVariable Long id) {
-        Optional<Person> person = this.personRepository.findPerson(id);
+        Optional<Person> person = personService.getPerson(id);
 
         if (person.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        this.personRepository.deletePerson(person.get());
+        personService.removePerson(person.get());
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

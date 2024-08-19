@@ -27,4 +27,16 @@ public class PersonService {
                 .filter(person -> person.getName().contains(filter.get()) || person.getSurname().contains(filter.get()))
                 .collect(Collectors.toList());
     }
+
+    public Optional<Person> getPerson(Long id) {
+        return this.personRepository.findPerson(id);
+    }
+
+    public Person createPerson(Person person) {
+        return personRepository.savePerson(person);
+    }
+
+    public void removePerson(Person person) {
+        personRepository.deletePerson(person);
+    }
 }
