@@ -25,7 +25,7 @@ public class DatabasePersonRepository implements PersonRepository {
         Iterable<PersonEntity> persons = this.jpaPersonRepository.findAll();
 
         return StreamSupport
-                .stream(persons.spliterator(), true) // TODO: research this and see what parallel is doing
+                .stream(persons.spliterator(), true)
                 .map(this::toPerson)
                 .collect(Collectors.toList());
     }
