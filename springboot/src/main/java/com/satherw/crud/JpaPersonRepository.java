@@ -1,7 +1,7 @@
 package com.satherw.crud;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+// TODO: Why doesn't this need @Repository (what is happening)
+// TODO: look into Spring Data JDBC
 public interface JpaPersonRepository extends CrudRepository<PersonEntity, Long> {}
