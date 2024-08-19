@@ -48,27 +48,6 @@ class CrudControllerTests {
 
 	@Test
 	@Rollback
-	void canCreateAPerson() throws Exception {
-		// given there are no persons
-		mockMvc.perform(get("/persons")).andExpect(jsonPath("*", hasSize(0)));
-
-		// when a person is added
-		mockMvc.perform(post("/persons")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content("""
-                {
-                        "name": "Will",
-                        "surname": "Sather"
-                }
-                """)).andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-
-		// then there is one person
-		mockMvc.perform(get("/persons")).andExpect(jsonPath("*", hasSize(1)));
-	}
-
-	@Test
-	@Rollback
 	void canCreateAPersonAndDeletePerson() throws Exception {
 		// given there are no persons
 		mockMvc.perform(get("/persons")).andExpect(jsonPath("*", hasSize(0)));
@@ -88,7 +67,7 @@ class CrudControllerTests {
 		mockMvc.perform(get("/persons")).andExpect(jsonPath("*", hasSize(1)));
 
 		// when a person is deleted
-		mockMvc.perform(delete("/persons/2")).andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+		mockMvc.perform(delete("/persons/3")).andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
 		// then there is no person
 		mockMvc.perform(get("/persons")).andExpect(jsonPath("*", hasSize(0)));
@@ -109,11 +88,43 @@ class CrudControllerTests {
                 """)).andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 
 		// when a person is retrieved, then the data matches the person
-		mockMvc.perform(get("/persons/3"))
+		mockMvc.perform(get("/persons/4"))
 				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-				.andExpect(jsonPath("$.id").value(3))
+				.andExpect(jsonPath("$.id").value(4))
 				.andExpect(jsonPath("$.name").value("Will"))
 				.andExpect(jsonPath("$.surname").value("Sather"));
+	}
+
+	@Test
+	@Rollback
+	void canRetrieveASinglePersonWithFilter() throws Exception {
+		// given two persons are stored
+		mockMvc.perform(post("/persons")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content("""
+                {
+                        "name": "Will",
+                        "surname": "Sather"
+                }
+                """)).andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+		mockMvc.perform(post("/persons")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content("""
+                {
+                        "name": "George",
+                        "surname": "Washington"
+                }
+                """)).andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+		// when a person is retrieved, then the data matches the person
+		mockMvc.perform(get("/persons?filter=Wash"))
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+				.andExpect(jsonPath("*", hasSize(1)))
+				.andExpect(jsonPath("$[0].name").value("George"))
+				.andExpect(jsonPath("$[0].surname").value("Washington"));
 	}
 
 	@Test

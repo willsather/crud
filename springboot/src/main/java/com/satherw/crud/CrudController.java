@@ -10,15 +10,18 @@ import java.util.Optional;
 @RestController
 public class CrudController {
 
+    private final PersonService personService;
+
     private final PersonRepository personRepository;
 
-    public CrudController(PersonRepository personRepository) {
+    public CrudController(PersonService personService, PersonRepository personRepository) {
+        this.personService = personService;
         this.personRepository = personRepository;
     }
 
     @GetMapping("/persons")
-    public List<Person> getPersons() {
-        return this.personRepository.findPersons();
+    public List<Person> getPersons(@RequestParam(value = "filter") Optional<String> filter) {
+        return personService.getPersons(filter);
     }
 
     @GetMapping("/persons/{id}")
