@@ -128,7 +128,21 @@ class PersonControllerTests {
 	}
 
 	@Test
-	public void canRetrieveZeroPersonsWithoutCreation() throws Exception {
+	void cannotRetrieveASinglePersonWithFilter() throws Exception {
+		mockMvc.perform(get("/persons?filter=asdfasdf"))
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+				.andExpect(jsonPath("*", hasSize(0)));
+	}
+
+	@Test
+	void cannotRetrieveASinglePersonWithInvalidFilter() throws Exception {
+		mockMvc.perform(get("/persons?filter"))
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+				.andExpect(jsonPath("*", hasSize(0)));
+	}
+
+	@Test
+	public void canRetrieveZeroPersonsWithoutCreation() throws Exception  {
 		mockMvc.perform(get("/persons"))
 				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
 				.andExpect(jsonPath("*", hasSize(0)));
