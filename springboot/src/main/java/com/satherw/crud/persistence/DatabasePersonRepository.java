@@ -1,4 +1,7 @@
-package com.satherw.crud;
+package com.satherw.crud.persistence;
+
+import com.satherw.crud.domain.Person;
+import com.satherw.crud.domain.PersonRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +25,7 @@ public class DatabasePersonRepository implements PersonRepository {
     }
 
     public List<Person> findPersons() {
-        Iterable<PersonEntity> persons = this.jpaPersonRepository.findAll();
+        Iterable<PersonEntity> persons = jpaPersonRepository.findAll();
 
         return StreamSupport
                 .stream(persons.spliterator(), true)
@@ -31,7 +34,7 @@ public class DatabasePersonRepository implements PersonRepository {
     }
 
     public void deletePerson(Person person) {
-        this.jpaPersonRepository.deleteById(person.getId());
+        jpaPersonRepository.deleteById(person.getId());
     }
 
     private PersonEntity toEntity(Person person) {

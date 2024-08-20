@@ -1,12 +1,10 @@
-package com.satherw.crud;
-
-import org.springframework.stereotype.Service;
+package com.satherw.crud.domain;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+
 public class PersonService {
 
     private final PersonRepository personRepository;

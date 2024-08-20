@@ -1,4 +1,4 @@
-package com.satherw.crud;
+package com.satherw.crud.persistence;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

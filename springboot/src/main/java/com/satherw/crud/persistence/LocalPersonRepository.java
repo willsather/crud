@@ -1,4 +1,7 @@
-package com.satherw.crud;
+package com.satherw.crud.persistence;
+
+import com.satherw.crud.domain.Person;
+import com.satherw.crud.domain.PersonRepository;
 
 import java.util.ArrayList;
 import java.util.List;

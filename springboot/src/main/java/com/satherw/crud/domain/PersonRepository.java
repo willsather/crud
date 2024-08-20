@@ -1,4 +1,4 @@
-package com.satherw.crud;
+package com.satherw.crud.domain;
 
 import java.util.List;
 import java.util.Optional;

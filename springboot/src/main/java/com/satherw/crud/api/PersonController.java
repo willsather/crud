@@ -1,5 +1,7 @@
-package com.satherw.crud;
+package com.satherw.crud.api;
 
+import com.satherw.crud.domain.Person;
+import com.satherw.crud.domain.PersonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
